@@ -7,11 +7,8 @@ import numpy as np
 def test_loss_fun(x, y):
     z = x-y
     z = z * z
-    #print(z.shape)
     z = np.sum(z, axis=1)
-    #print(z.shape)
     z = np.sqrt(z)
-    #print("train loss in my fun : {} {} {}".format(z.min(), z.mean(), z.max()))
     return z.mean()
 
 def ColorSample(num):
@@ -50,9 +47,7 @@ def PlotData(source_data, neural_data, plot_type=0):
     for k, v in d.items():
         d[k] = np.hstack((count, color_sample[count, :]))
         count = count + 1
-    color_data_int = np.zeros([1, 3], np.int)
     cdata = np.zeros(shape=[numX, 4], dtype=np.int)
-    celldata = np.zeros(shape=[numX, 1], dtype=np.int)
     for i in range(numX):
         if plot_type == 0:
             t = tuple(neural_data[i, 0: num_col])
@@ -60,10 +55,9 @@ def PlotData(source_data, neural_data, plot_type=0):
             t = tuple(neural_data[i, num_col + 1:])
         if plot_type == 2:
             t = tuple(neural_data[i, :])
-        cdata[i, :] = d[t]# / 256
-        #print('color_data = {}'.format(color_data[i, :]))
+        cdata[i, :] = d[t]
     print('color_data shape = {}'.format(cdata.shape))
-    fwriter = open("colored_latent_data.txt", "w")
+    fwriter = open("colored_data.txt", "w")
     for i in range(numX):
         my_str = ""
         for j in range(source_data.shape[1]):

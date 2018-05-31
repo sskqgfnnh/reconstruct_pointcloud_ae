@@ -16,7 +16,7 @@ import ssk
 
 np.set_printoptions(threshold=np.nan)
 
-training = False
+training = True
 test_buddha = True
 
 model_name = 'buddha'
@@ -186,7 +186,7 @@ if training == True:
                     min_tot_loss = loss.item()
                     print('epoch [{}/{}], loss:{:.4e}, test_loss:{:.4e} *'
                           .format(epoch + 1, num_epochs, loss.item(), test_loss))
-                    torch.save(model, './' + model_name + '_autoencoder_0530.pth')
+                    torch.save(model, './' + model_name + '_autoencoder.pth')
                 else:
                     print('epoch [{}/{}], loss:{:.4e}, test_loss:{:.4e}'
                           .format(epoch + 1, num_epochs, loss.item(), test_loss))
@@ -237,5 +237,7 @@ if test_buddha == True:
         output_data[index: index + odata.shape[0], :] = odata
         index = index + odata.shape[0]
     np.savetxt('output_' + model_name + '.csv', output_data, delimiter=',')
-    # ssk.PlotData(testdata, neural_data, plot_type=1)
+    np.savetxt('latent_' + model_name + '.csv', latent_data, delimiter=',')
+    np.savetxt('neural_' + model_name + '.csv', neural_data, delimiter=',')
+    ssk.PlotData(testdata, neural_data, plot_type=1)
     # ssk.PlotData(latent_data, neural_data, plot_type=1)
